@@ -27,7 +27,7 @@
 /**
  *  Set the percentage of the progress path.
  *
- *  @param percentage in range of 0 to 100.
+ *  @param percentage of the circular path of a full circle.
  *  @param animate    if YES then the progress will be animated from the current value.
  */
 -(void)setPercentage:(float)percentage animate:(BOOL)animate;

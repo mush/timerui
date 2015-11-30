@@ -33,12 +33,11 @@
 
 #pragma mark - Private
 -(void)setPercentage:(float)percentage animate:(BOOL)animate{
-    
-    if(percentage < 0.0){
-        percentage = 0.0;
+    if((int)percentage < 0){
+        percentage = 0;
     }
-    if(percentage > 100.0){
-        percentage = 100.0;
+    if((int)percentage > 100){
+        percentage = 100;
     }
     self.animate = animate;
     self.progressPercentage = percentage;

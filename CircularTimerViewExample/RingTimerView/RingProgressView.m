@@ -14,7 +14,6 @@ static CFTimeInterval const kResetAnimationTime = 0.3f;
 
 @interface RingProgressView ()
 @property(nonatomic) CADisplayLink *displayLink;
-@property(nonatomic) double previousTickTime;
 @property(nonatomic) double elapsedTime;
 @property(nonatomic) RingProgressState state;
 
@@ -73,6 +72,7 @@ static CFTimeInterval const kResetAnimationTime = 0.3f;
 
 -(void)startLoop{
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
+    self.displayLink.frameInterval = 1;
     [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
@@ -80,7 +80,6 @@ static CFTimeInterval const kResetAnimationTime = 0.3f;
 -(void)tap:(UITapGestureRecognizer*)gesture{
     switch (self.state) {
         case RingProgressStateNone:
-            self.previousTickTime = CACurrentMediaTime();
             [self startLoop];
             self.state = RingProgressStateStarted;
             break;
@@ -89,7 +88,6 @@ static CFTimeInterval const kResetAnimationTime = 0.3f;
             self.state = RingProgressStatePaused;
             break;
         case RingProgressStatePaused:
-            self.previousTickTime = CACurrentMediaTime();
             [self startLoop];
             self.state = RingProgressStateStarted;
             break;
@@ -105,8 +103,7 @@ static CFTimeInterval const kResetAnimationTime = 0.3f;
 #pragma mark CADisplay Tick
 -(void)tick:(CADisplayLink*)displayLink{
     
-    self.elapsedTime += (displayLink.timestamp - self.previousTickTime);
-    self.previousTickTime = displayLink.timestamp;
+    self.elapsedTime += self.displayLink.duration * self.displayLink.frameInterval;
     
     [self.timerLayer setPercentage:(self.elapsedTime/self.timerDuration)*100.0 animate:NO];
     
