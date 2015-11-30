@@ -64,14 +64,13 @@
                  startAngle,
                  endAngle,
                  NO);
-    
-    CGPathRef strokedArc =
-    CGPathCreateCopyByStrokingPath(arc,
+        
+    CGPathRef strokedArc = CGPathCreateCopyByStrokingPath(arc,
                                    NULL,
                                    lineWidth,
                                    kCGLineCapButt,
-                                   kCGLineJoinBevel,
-                                   10);
+                                   kCGLineJoinMiter,
+                                   1);
     
     CGContextSetFillColorWithColor(ctx, fillColor);
     CGContextSetStrokeColorWithColor(ctx, strokeColor);

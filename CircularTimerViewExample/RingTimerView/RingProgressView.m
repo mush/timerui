@@ -55,14 +55,13 @@ static CFTimeInterval const kResetAnimationTime = 0.3f;
 }
 
 -(void)layoutSublayersOfLayer:(CALayer *)layer{
-    
+
+    //draw the bg path.
     self.bgLayer.frame = self.bounds;
     UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.bounds, self.bgLayer.lineWidth, self.bgLayer.lineWidth)];
     [self.bgLayer setPath:path.CGPath];
-    [self.bgLayer setNeedsDisplay];
     
     self.timerLayer.frame = self.bounds;
-    [self.timerLayer setNeedsDisplay];
 }
 
 -(void)stopLoop{
